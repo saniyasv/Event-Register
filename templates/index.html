@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Registration System</title>
+    <meta name="description" content="Student event registration management system — manage students, events, and registrations.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<!-- ─── Sidebar ──────────────────────────────────────────────────── -->
+<aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+        <div class="brand-icon">🎓</div>
+        <h1>EventHub</h1>
+    </div>
+    <nav class="sidebar-nav">
+        <button class="nav-btn active" data-tab="dashboard" id="nav-dashboard">
+            <span class="nav-icon">📊</span> Dashboard
+        </button>
+        <button class="nav-btn" data-tab="students" id="nav-students">
+            <span class="nav-icon">👩‍🎓</span> Students
+        </button>
+        <button class="nav-btn" data-tab="events" id="nav-events">
+            <span class="nav-icon">🎪</span> Events
+        </button>
+        <button class="nav-btn" data-tab="registrations" id="nav-registrations">
+            <span class="nav-icon">📋</span> Registrations
+        </button>
+    </nav>
+    <div class="sidebar-footer">
+        <p>DBMS Mini Project</p>
+    </div>
+</aside>
+
+<!-- ─── Main Content ─────────────────────────────────────────────── -->
+<main class="main-content" id="main-content">
+
+    <!-- Header -->
+    <header class="top-bar">
+        <button class="menu-toggle" id="menu-toggle">☰</button>
+        <h2 class="page-title" id="page-title">Dashboard</h2>
+        <div class="top-bar-right">
+            <span class="date-display" id="date-display"></span>
+        </div>
+    </header>
+
+    <!-- ─── Dashboard Tab ───────────────────────────────────────── -->
+    <section class="tab-content active" id="tab-dashboard">
+        <div class="stats-grid">
+            <div class="stat-card stat-students">
+                <div class="stat-icon">👩‍🎓</div>
+                <div class="stat-info">
+                    <span class="stat-number" id="stat-students">0</span>
+                    <span class="stat-label">Students</span>
+                </div>
+            </div>
+            <div class="stat-card stat-events">
+                <div class="stat-icon">🎪</div>
+                <div class="stat-info">
+                    <span class="stat-number" id="stat-events">0</span>
+                    <span class="stat-label">Events</span>
+                </div>
+            </div>
+            <div class="stat-card stat-registrations">
+                <div class="stat-icon">📋</div>
+                <div class="stat-info">
+                    <span class="stat-number" id="stat-registrations">0</span>
+                    <span class="stat-label">Registrations</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard-grid">
+            <div class="card">
+                <h3 class="card-title">Students per Event</h3>
+                <div id="event-counts-list" class="list-container">
+                    <p class="empty-state">No data yet</p>
+                </div>
+            </div>
+            <div class="card">
+                <h3 class="card-title">Recent Registrations</h3>
+                <div id="recent-registrations-list" class="list-container">
+                    <p class="empty-state">No registrations yet</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ─── Students Tab ────────────────────────────────────────── -->
+    <section class="tab-content" id="tab-students">
+        <div class="tab-header">
+            <div class="search-box">
+                <input type="text" id="student-search" placeholder="Search students..." class="search-input">
+            </div>
+            <button class="btn btn-primary" id="btn-add-student">+ Add Student</button>
+        </div>
+        <div class="table-wrap">
+            <table class="data-table" id="students-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Department</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="students-tbody"></tbody>
+            </table>
+            <p class="empty-state" id="students-empty" style="display:none;">No students found. Add one to get started!</p>
+        </div>
+    </section>
+
+    <!-- ─── Events Tab ──────────────────────────────────────────── -->
+    <section class="tab-content" id="tab-events">
+        <div class="tab-header">
+            <div class="search-box">
+                <input type="text" id="event-search" placeholder="Search events..." class="search-input">
+            </div>
+            <button class="btn btn-primary" id="btn-add-event">+ Add Event</button>
+        </div>
+        <div class="table-wrap">
+            <table class="data-table" id="events-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Event Name</th>
+                        <th>Date</th>
+                        <th>Venue</th>
+                        <th>Organizer</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="events-tbody"></tbody>
+            </table>
+            <p class="empty-state" id="events-empty" style="display:none;">No events found. Create one to get started!</p>
+        </div>
+    </section>
+
+    <!-- ─── Registrations Tab ───────────────────────────────────── -->
+    <section class="tab-content" id="tab-registrations">
+        <div class="tab-header">
+            <div class="search-box">
+                <input type="text" id="reg-search" placeholder="Search registrations..." class="search-input">
+            </div>
+            <button class="btn btn-primary" id="btn-add-registration">+ New Registration</button>
+        </div>
+        <div class="table-wrap">
+            <table class="data-table" id="registrations-table">
+                <thead>
+                    <tr>
+                        <th>Reg ID</th>
+                        <th>Student</th>
+                        <th>Event</th>
+                        <th>Reg. Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="registrations-tbody"></tbody>
+            </table>
+            <p class="empty-state" id="registrations-empty" style="display:none;">No registrations yet.</p>
+        </div>
+    </section>
+
+</main>
+
+<!-- ─── Modal Overlay ────────────────────────────────────────────── -->
+<div class="modal-overlay" id="modal-overlay">
+    <div class="modal" id="modal">
+        <div class="modal-header">
+            <h3 id="modal-title">Add Student</h3>
+            <button class="modal-close" id="modal-close">&times;</button>
+        </div>
+        <form id="modal-form" class="modal-body">
+            <!-- Dynamic form fields injected by JS -->
+        </form>
+        <div class="modal-footer">
+            <button class="btn btn-ghost" id="modal-cancel">Cancel</button>
+            <button class="btn btn-primary" id="modal-submit">Save</button>
+        </div>
+    </div>
+</div>
+
+<!-- ─── Detail Modal (for viewing participants / events) ─────────── -->
+<div class="modal-overlay" id="detail-overlay">
+    <div class="modal modal-wide" id="detail-modal">
+        <div class="modal-header">
+            <h3 id="detail-title">Details</h3>
+            <button class="modal-close" id="detail-close">&times;</button>
+        </div>
+        <div class="modal-body" id="detail-body">
+        </div>
+    </div>
+</div>
+
+<!-- ─── Toast Container ──────────────────────────────────────────── -->
+<div class="toast-container" id="toast-container"></div>
+
+<script src="/static/app.js"></script>
+</body>
+</html>
